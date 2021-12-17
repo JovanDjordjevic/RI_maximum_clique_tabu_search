@@ -1,0 +1,66 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english,serbian]{babel}
+\usepackage{hyperref}
+\hypersetup{
+colorlinks,
+linkcolor=blue,
+urlcolor=blue
+}
+
+\title{Maximum clique korišćenjem Tabu pretrage \vspace{0.4cm}\\
+\large Projekat iz Računarske inteligencije \\ Matematički fakultet \\ Univerzitet u Beogradu  \vspace{1cm} \\}
+\author{Jovan Đorđević\\
+\href{mailto:mi17164@alas.matf.bg.ac.rs}{mi17164@alas.matf.bg.ac.rs} \\
+Tamara Tomić\\
+\href{mailto:mi17122@alas.matf.bg.ac.rs}{mi17122@alas.matf.bg.ac.rs} \vspace{0.5cm} \\
+}
+\date{Decembar 2021}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\renewcommand*\contentsname{Sadržaj}
+\tableofcontents
+
+\newpage
+
+\section{Opis problema} \\
+Neka je G = (V, E) neusmeren graf, gde je $V = \{1,...,n\}$ skup čvorova i $ E \subset V $ x $ V $ skup grana grafa. Klik C grafa G je podskup V takav da su svaka dva čvora povezana , odnosno da važi $\forall u, v \in C, \hspace{0.1cm} $\{u, v\}$ \hspace{0.1cm} \in E $. Klik C je maksimalan ako nije sadržan ni u jednom drugom kliku, odnosno ako je njegova kardinalnost veća od kardinalnosti svih drugih klikova. Pronalaženje maksimalnog klika je NP-težak problem, koji ima primenu u rešavanju mnogih svakodnevnih problema - teorija klasifikacije, dijagnostika kvara, biološke analize, analize klastera, izbor projekta, itd. Problem pronalaska maksimalnog klika je ekvivalentat problemu maksimalnog nezavisnog skupa i uskoro povezan sa problemom bojenja grafa.
+
+\section{Ulazni podaci i struktura Graf}
+
+Graf smo implementirali preko matrice povezanosti. Matrica je dimenzije N x N gde je N broj cvorova + 1. Ako u grafu postoji grana izmedju cvorova 'i' i 'j',   i,j \in V \end, vrednost matrice m[i][j] ce biti jednaka 1, u suprotnom 0, tj: \\
+$$
+adjacentMatrix[i][j] =
+\left\{
+	\begin{array}{ll}
+		1,  & \mbox{if } (i, j) \in E \\
+		0,  & \mbox{if } (i, j) \notin E \\
+	\end{array}
+\right.
+$$ \\
+Omogućili smo lepo tabelirano prikazivanje matrice povezanosti grafa preoprerećenjem funkcije $ __str__ $ iz Graph klase. Potrebno je instalirati 'tabulate' pomoću komande : \textbf{pip install tabulate}. \\
+Test instance na kojima će biti testiran naš algoritam mogu se prezuzeti sa sledeće adrese: \href{https://networkrepository.com/dimacs.php}{https://networkrepository.com/dimacs.php}. \\
+Zadati grafovi se tretiraju kao neusmereni grafovi bez težina. U prvom redu svakog fajla navedene su informacije o broju čvorova u grafu, a u svakom narednom redu navedena je jedna grana. Najmanji graf u ovoj kolekciji ima 28 čvorova i 420 grana, dok najveći imaju oko 3 do 4 hiljade cvorova i oko 4 do 6 miliona grana. Ovaj set test instanci je izabran kako bi što je moguće blize uporedili nas rezultat sa rezultatom iz rada [1]. Bitno je prilikom analize rezultata imati na umu razlike u implementaciji. U originalnom radu [1], AMTS algoritam implementiran je u programskom jeziku C, kompajliran pomocu GNU GCC i pokrenut na racunaru sa 2GB RAM memorije i 2.61 GHz procesorom.
+Naš algoritma implementiran je u sporijem programskom jeziku (Python), ali pokrenut na dosta bržem računaru (32GB RAM, 5.0 GHZ CPU).
+
+
+
+\section{Tabu pretraga - uopšteno}
+Tabu pretraga je metaheuristika koja spada u algoritme lokalne pretrage i koristi se za rešavanje problema kombinatorne optimizacije. Cilj ove vrste pretrage je da izbegne zaglavljivanje u lokalnim minimumima, što se postiže korišćenjem tabua (zabranjenih stanja). Odražava se tzv. tabu lista, tj. lista stanja u kojime je pretraga već bila i u koja se više neće vraćati. Dozvoljavaju se potezi koji pogoršavaju vrednost funkcije, pod uslovom da nema boljih dozvoljenih poteza. Ova dva pristupa omogućavaju da se napisti lokalni mininum.
+
+\newpage
+\addcontentsline{toc}{section}{Literatura}
+\begin{thebibliography}{9}
+
+\bibitem{} 
+{Qinghua Wu, Jin-Kao Hao -
+\textit An adaptive multistart tabu search approach to solve the maximum clique problem}
+
+\end{thebibliography}
+
+\end{document}
