@@ -19,6 +19,15 @@ class Graph:
     def getNodeCount(self):
         return self.nodeCount - 1
 
+    def getNodeSet(self):
+        V = set()
+        for i in range(1, self.nodeCount):
+            V.add(i)
+        return V
+
+    def getDensity(self):
+        return (2 * self.getEdgeCount()) / (self.getNodeCount() * (self.getNodeCount() - 1))
+
     def getEdgeCount(self):
         count = 0
         for i in range(self.nodeCount):
