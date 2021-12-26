@@ -1,7 +1,9 @@
 from GraphClass import *
 import numpy as np
 from amts import *
+from bruteforce import *
 import timeit
+
 
 if __name__ == "__main__":
     with open("data/johnson8-2-4.mtx") as f:
@@ -51,5 +53,11 @@ if __name__ == "__main__":
                maxClique = kClique
                maxCliqueTime = timerEnd - timerStart
 
-        
+        maxCliqueTime = -1
+        timerStart = timeit.default_timer()
+        maxC = maxClique_bruteforce(g, 0, 1)
+        timerEnd = timeit.default_timer()
+        maxCliqueTime = timerEnd - timerStart
+        print()
+        print(f"Maximum found clique is of size {maxK} with bruteforce algorithm, found in {maxCliqueTime} seconds.")
         
