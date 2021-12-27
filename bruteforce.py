@@ -7,11 +7,14 @@ subset = [0] * MAX
 
 # funckcija koja proverava da li je trenutni podskup klik velicine k
 def isClique(g, k):
+
+    adjMatrix = g.getAdjacencyMatrix()
+
     for i in range(1, k):
         for j in range(i+1, k):
 
             # ako bilo koja grana nedostaje znaci da nije klik i mozemo odmah da vratimo false
-            if(g.adjacencyMatrix[subset[i]][subset[j]]) == 0:
+            if(adjMatrix[subset[i]][subset[j]]) == 0:
                 return False
 
     return True
@@ -20,7 +23,7 @@ def maxClique_bruteforce(g, i, l):
     max_clique= 0
 
     # proveravamo da li mozemo da dodamo bilo koji čvor tako da prosimo podskup i da on i dalje bude klik
-    for j in range(i+1, g.nodeCount):
+    for j in range(i+1, g.getNodeCount()):
         subset[l] = j
 
         if(isClique(g, l+1)):
