@@ -315,9 +315,8 @@ def amts (g:Graph, k:int, L:int, maxIters:int):
             notInS = deepcopy(g.getNodeSet())
             constructInitialSolution(S, notInS, g, frequencies, k)
     
-    # ako za sve ove iteracije nije nasao veci clique od onga sto smo vec nasli u okviru funkcije koja ce da poziva amts
-    # za svako k=3...|V| onda to signaliziramo pozivajucoj funkciji kao prazan set
-    return set(), iters
+    # ako se desi da prodje maxIters, vracamo najveci koji smo do sada videli 
+    return S, iters
 
 
 
