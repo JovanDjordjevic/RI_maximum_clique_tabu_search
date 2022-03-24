@@ -1,3 +1,10 @@
+*.out
+*.o
+*.exe
+*.obj
+
+plotData.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
