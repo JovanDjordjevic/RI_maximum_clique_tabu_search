@@ -2,6 +2,7 @@
 *.o
 *.exe
 *.obj
+.vscode
 
 plotData.txt
 

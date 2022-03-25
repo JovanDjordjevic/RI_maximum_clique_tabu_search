@@ -25,52 +25,55 @@ int main() {
             std::vector<int> iterCounts{};
             std::vector<int> cliqueSizes{};
 
-            int maxIters = 100000;
-            int L = g.getNodeCount();
+            // ponavljamo za jedan graf 5 puta
+            for(int i = 1; i <= 5; ++i) {
+                int maxIters = 100000;                  // probati i sa nekim vecim parametrom potencijalno, ali to povlaci vece vreme
+                int L = g.getNodeCount();
 
-            auto start = std::chrono::high_resolution_clock::now();
+                auto start = std::chrono::high_resolution_clock::now();
 
-            int currentCliqueSize = 3;
-            int maxFoundCliqueSize = 0;
-            int totalIterations = 0;
+                int currentCliqueSize = 3;
+                int maxFoundCliqueSize = 0;
+                int totalIterations = 0;
 
-            
-            std::cout << "--------------------------------------------------------------------------" << std::endl;
-            std::cout << "Finding maximum clique in graph: " << dirEntry.path().stem() << std::endl;
-            std::cout << "--------------------------------------------------------------------------" << std::endl;
+                
+                std::cout << "--------------------------------------------------------------------------" << std::endl;
+                std::cout << "Finding maximum clique in graph: " << dirEntry.path().stem() << " attempt " << i << "/5"  << std::endl;
+                std::cout << "--------------------------------------------------------------------------" << std::endl;
 
-            while(true) {
-                std::cout << "Trying to find clique of size: " << currentCliqueSize << std::endl;
+                while(true) {
+                    std::cout << "Trying to find clique of size: " << currentCliqueSize << " ..... ";
 
-                auto [resultClique, passedIterations] = amts(g, currentCliqueSize, L, maxIters);
-
-                if(resultClique.size() == 0) {
-                    std::cout << "Failed to find clique of size " << currentCliqueSize << std::endl;
-                    break;
-                }
-                else {
-                    std::cout << "Found clique of size " << currentCliqueSize << " in " << passedIterations << " iterations" << std::endl;
-                    // std::cout << "Resulting clique { ";
-                    // for(auto& val : resultClique) {
-                    //     std::cout << val << " ";
-                    // }
-                    // std::cout << "}" << std::endl << std::endl;
-                    std::cout << std::endl;
-
-                    maxFoundCliqueSize = currentCliqueSize;
+                    auto [resultClique, passedIterations] = amts(g, currentCliqueSize, L, maxIters);
+                    
                     totalIterations += passedIterations;
+
+                    if(resultClique.size() == 0) {
+                        std::cout << "Failed to find clique of size " << currentCliqueSize << " in " << passedIterations << std::endl;
+                        break;
+                    }
+                    else {
+                        std::cout << "Found clique of size " << currentCliqueSize << " in " << passedIterations << " iterations" << std::endl;
+                        // std::cout << "Resulting clique { ";
+                        // for(auto& val : resultClique) {
+                        //     std::cout << val << " ";
+                        // }
+                        // std::cout << "}" << std::endl << std::endl;
+
+                        maxFoundCliqueSize = currentCliqueSize;
+                    }
+
+                    ++currentCliqueSize;
                 }
 
-                ++currentCliqueSize;
+                auto end = std::chrono::high_resolution_clock::now();
+                std::chrono::duration<double> diff = end - start;
+                // std::cout << diff.count() << std::endl;
+
+                times.emplace_back(diff.count());
+                cliqueSizes.emplace_back(maxFoundCliqueSize);
+                iterCounts.emplace_back(totalIterations);
             }
-
-            auto end = std::chrono::high_resolution_clock::now();
-            std::chrono::duration<double> diff = end - start;
-            // std::cout << diff.count() << std::endl;
-
-            times.emplace_back(diff.count());
-            cliqueSizes.emplace_back(maxFoundCliqueSize);
-            iterCounts.emplace_back(totalIterations);
 
             std::cout << std::endl;
             std::cout << "Exporting results......";

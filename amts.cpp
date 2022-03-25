@@ -79,7 +79,8 @@ void constructInitialSolution(std::unordered_set<int>& S, std::unordered_set<int
         }
         
         // vidi da li ovaj deo treba negde dugde da se izmesti
-        std::default_random_engine generator;
+        std::random_device rd;
+        std::mt19937 generator(rd());
         std::uniform_int_distribution<int> distribution(0, candidates.size() - 1);
 
         nodeToAdd = candidates[distribution(generator)];
@@ -160,7 +161,8 @@ std::tuple<CN, VECT, VECT, int, int> generateConstrainedNeighborhood(VECT& tabuL
 
 
 std::pair<int, int> calcTenures(int fS, int k) {
-    std::default_random_engine generator;
+    std::random_device rd;
+    std::mt19937 generator(rd());
     
     int l = std::min(10, k * (k - 1) / 2 - fS);
     int C = std::max(static_cast<int>(std::floor(k / 40)), 6);
@@ -178,7 +180,8 @@ std::pair<int, int> calcTenures(int fS, int k) {
 // param L je za otkrivanje stagnacije
 std::pair<std::unordered_set<int>, int> ts_0(Graph& g, std::unordered_set<int>& S, std::unordered_set<int>& notInS, std::vector<int>& frequencies, int k, int L, int iteration, int maxIters) {
     // za random 
-    std::default_random_engine generator;
+    std::random_device rd;
+    std::mt19937 generator(rd());
     
     // br uzastpnih iteracija koje se funkc f(S) nije poboljsala
     int tabuIters = 0;
@@ -249,7 +252,7 @@ std::pair<std::unordered_set<int>, int> ts_0(Graph& g, std::unordered_set<int>& 
             int u = -1;
             int v = -1;
 
-            std::uniform_real_distribution<double> distr_p(0, 1);
+            std::uniform_real_distribution<double> distr_p(0, std::nextafter(1, std::numeric_limits<double>::max()));
             if( distr_p(generator) < p) {
                 // ovde mi treba u= random iz skupa S, nema lep nacin u c++ tako da pravim vektor u kom su vrednsoti iz S pa cu iz njega da odaberem ]
                 std::vector<int> choiceVector(std::begin(S), std::end(S));
