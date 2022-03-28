@@ -1,4 +1,5 @@
 #include "GraphClass.hpp"
+#include <algorithm>
 #include <iostream>
 #include <random>
 #include <tuple>
@@ -17,7 +18,7 @@ int f(Graph& g, std::unordered_set<int>& S) {
     for(auto& i : S){
         for(auto& j : S) {
             if(adjMatrix[i][j] == 1) {
-                f += 1;
+                ++f;
             }
         }
     }
@@ -27,18 +28,45 @@ int f(Graph& g, std::unordered_set<int>& S) {
 
 
 void constructInitialSolution(std::unordered_set<int>& S, std::unordered_set<int>& notInS, Graph& g, std::vector<int>& frequencies, int k) {
-    // proveri da li se ovo ponasa kao onaj armin u pajtonu
-    int minFreq = std::numeric_limits<int>::max();
-    int nodeToAdd = 0; // ...
+    // // proveri da li se ovo ponasa kao onaj armin u pajtonu
+    // int minFreq = std::numeric_limits<int>::max();
+    // int nodeToAdd = 0; 
+
+    // for(size_t i = 1; i < frequencies.size(); ++i) {
+    //     if(frequencies[i] < minFreq) {
+    //         minFreq = frequencies[i];
+    //         nodeToAdd = i;
+    //     }
+    // }   
+    
+        // za random
+    std::random_device rd;
+    std::mt19937 generator(rd());
+
+    //int V = g.getNodeCount();
+    //std::vector<std::vector<int>> adjMatrix = g.getAdjacencyMatrix();
+
+    int minFrequency = std::numeric_limits<int>::max();
+
+    // kljuc je frekvencija a vrednost su cvorovi koji imaju tu frekvenciju
+    std::unordered_map<int, std::vector<int>> frequencyGroups;
     for(size_t i = 1; i < frequencies.size(); ++i) {
-        if(frequencies[i] < minFreq) {
-            minFreq = frequencies[i];
-            nodeToAdd = i;
+        int freq = frequencies[i];
+        frequencyGroups[freq].emplace_back(i);
+        if(freq < minFrequency) {
+            minFrequency = freq;
         }
     }
+    
+    // za prvi cvor u S se uzima neki random iz grupe cvorova koji imaju tu najmanju frekvenciju
+    std::vector<int> minFreqGroup = frequencyGroups[minFrequency];
+    std::uniform_int_distribution<int> firstNodeDistr(0, minFreqGroup.size() - 1);
 
+    int nodeToAdd = minFreqGroup[firstNodeDistr(generator)];
     S.emplace(nodeToAdd);
     notInS.erase(nodeToAdd);
+    ++frequencies[nodeToAdd];
+
 
     std::vector<std::vector<int>> adjMatrix = g.getAdjacencyMatrix();
 
@@ -87,6 +115,7 @@ void constructInitialSolution(std::unordered_set<int>& S, std::unordered_set<int
 
         S.emplace(nodeToAdd);
         notInS.erase(nodeToAdd);
+        ++frequencies[nodeToAdd];
 
         degreesTowardsS[nodeToAdd] = 0;
 
@@ -109,6 +138,123 @@ void constructInitialSolution(std::unordered_set<int>& S, std::unordered_set<int
 
     return;
 }
+
+
+// void constructInitialSolution(std::unordered_set<int>& S, std::unordered_set<int>& notInS, Graph& g, std::vector<int>& frequencies, int k) {
+//     // za random
+//     std::random_device rd;
+//     std::mt19937 generator(rd());
+
+//     int V = g.getNodeCount();
+//     std::vector<std::vector<int>> adjMatrix = g.getAdjacencyMatrix();
+
+//     int minFrequency = std::numeric_limits<int>::max();
+
+//     // kljuc je frekvencija a vrednost su cvorovi koji imaju tu frekvenciju
+//     std::unordered_map<int, std::vector<int>> frequencyGroups;
+//     for(size_t i = 1; i < frequencies.size(); ++i) {
+//         int freq = frequencies[i];
+//         frequencyGroups[freq].emplace_back(i);
+//         if(freq < minFrequency) {
+//             minFrequency = freq;
+//         }
+//     }
+    
+//     // za prvi cvor u S se uzima neki random iz grupe cvorova koji imaju tu najmanju frekvenciju
+//     std::vector<int> minFreqGroup = frequencyGroups[minFrequency];
+//     std::uniform_int_distribution<int> firstNodeDistr(0, minFreqGroup.size() - 1);
+
+//     int firstNodeToAdd = minFreqGroup[firstNodeDistr(generator)];
+//     S.emplace(firstNodeToAdd);
+//     notInS.erase(firstNodeToAdd);
+//     ++frequencies[firstNodeToAdd];
+
+//     // ---------------
+
+//     // za odredjivanje anrednih k-1 kandidata treba nam inforamcija o stepenu ka S
+//     // std::vector<int> degreesTowardsS(V + 1, 0);
+//     // int maxDegree = std::numeric_limits<int>::min();
+//     // std::unordered_map<int, std::vector<int>> degreeGroups;
+
+//     // for(auto& i : notInS) {
+//     //     if(adjMatrix[i][firstNodeToAdd] == 1) {
+//     //         ++degreesTowardsS[i];
+//     //     }
+//     // }
+
+//     // while(S.size() < static_cast<size_t>(k)) {
+
+//     //     // dodaj onaj sa najvecim stepenom
+//     //     // azuriraj stepene
+//     // }
+
+//     // mapa gde je kljuc stepen cvora ka S, a vrednsot skup cvorova sa tim stepeno
+//     std::unordered_map<int, std::unordered_set<int>> degreeSets{};
+//     std::vector<int> degreesTowardsS(V, 0);
+//     int maxDegree = 0;
+
+//     for(auto& i : notInS) {
+//         for(auto&j : S) {
+//             if(adjMatrix[i][j] == 1) {
+//                 degreesTowardsS[i] += 1;
+//             }
+//         }
+
+//         degreeSets[degreesTowardsS[i]].emplace(i);
+
+//         if(degreesTowardsS[i] > maxDegree) {
+//             maxDegree = degreesTowardsS[i];
+//         }
+//     }
+
+//     while(S.size() < static_cast<size_t>(k)) {
+//         std::vector<int> candidates{};
+//         int minFreq = std::numeric_limits<int>::max();
+
+//         for(auto& i : degreeSets[maxDegree]) {
+//             if(frequencies[i] < minFreq) {
+//                 minFreq = frequencies[i];
+//                 candidates = {};
+//                 candidates.emplace_back(i);
+//             }
+//             else if(frequencies[i] == minFreq) {
+//                candidates.emplace_back(i);
+//             }
+//         }
+        
+//         // vidi da li ovaj deo treba negde dugde da se izmesti
+//         std::random_device rd;
+//         std::mt19937 generator(rd());
+//         std::uniform_int_distribution<int> distribution(0, candidates.size() - 1);
+
+//         int nodeToAdd = candidates[distribution(generator)];
+
+//         S.emplace(nodeToAdd);
+//         notInS.erase(nodeToAdd);
+//         ++frequencies[nodeToAdd];
+
+//         degreesTowardsS[nodeToAdd] = 0;
+
+//         degreeSets[maxDegree].erase(nodeToAdd);
+//         while(degreeSets[maxDegree].size() == 0) {
+//             --maxDegree;
+//         }
+
+//         for(auto& i : notInS) {
+//             if(adjMatrix[i][nodeToAdd] == 1) {
+//                 degreeSets[degreesTowardsS[i]].erase(i);
+//                 ++degreesTowardsS[i];
+//                 degreeSets[degreesTowardsS[i]].emplace(i);
+//                 if(degreesTowardsS[i] > maxDegree) {
+//                     maxDegree = degreesTowardsS[i];
+//                 }
+//             }
+//         }
+//     }
+
+//     return;
+// }
+
 
 template<typename CN = std::vector<std::tuple<int, int, int>>, typename VECT = std::vector<int>, typename SET = std::unordered_set<int>>
 std::tuple<CN, VECT, VECT, int, int> generateConstrainedNeighborhood(VECT& tabuList, Graph& g, SET& S, SET& notInS, VECT& degreesTowardsS, int currentIteration) {
@@ -163,7 +309,7 @@ std::tuple<CN, VECT, VECT, int, int> generateConstrainedNeighborhood(VECT& tabuL
 std::pair<int, int> calcTenures(int fS, int k) {
     std::random_device rd;
     std::mt19937 generator(rd());
-    
+
     int l = std::min(10, k * (k - 1) / 2 - fS);
     int C = std::max(static_cast<int>(std::floor(k / 40)), 6);
 
@@ -215,7 +361,7 @@ std::pair<std::unordered_set<int>, int> ts_0(Graph& g, std::unordered_set<int>& 
             }
         }
     }
-
+    
     while(tabuIters < L && tabuIters < maxIters) {
         // posto l i C zavise od funkcije fS, ima smisla ne racunati ih stalno vec 
         // fS = fBestS samo kada se nadje novi najbolji
@@ -253,12 +399,14 @@ std::pair<std::unordered_set<int>, int> ts_0(Graph& g, std::unordered_set<int>& 
             int v = -1;
 
             std::uniform_real_distribution<double> distr_p(0, std::nextafter(1, std::numeric_limits<double>::max()));
-            if( distr_p(generator) < p) {
+
+            // provera za A i B je dodata jer u slucaju da su 0, random index bude negativan i onda bude segfault
+            if(A.size() == 0 || B.size() == 0 || distr_p(generator) < p) {
                 // ovde mi treba u= random iz skupa S, nema lep nacin u c++ tako da pravim vektor u kom su vrednsoti iz S pa cu iz njega da odaberem ]
                 std::vector<int> choiceVector(std::begin(S), std::end(S));
                 std::uniform_int_distribution<int> distr_choiceVector(0, choiceVector.size() - 1);
                 u = choiceVector[distr_choiceVector(generator)];
-
+                
                 double kDens = std::floor(k * g.getDensity());
                 std::vector<int> probV{};
                 for(auto& v : notInS) {
@@ -267,12 +415,18 @@ std::pair<std::unordered_set<int>, int> ts_0(Graph& g, std::unordered_set<int>& 
                     }
                 }
 
-                std::uniform_int_distribution<int> distr_probV(0, probV.size() - 1);
-                v = probV[distr_probV(generator)];
+                // isto i ovde za probV, recimo samo da cemo uzeti random cvor za v
+                if(probV.size() == 0) {
+                    v = choiceVector[distr_choiceVector(generator)];
+                }
+                else {
+                    std::uniform_int_distribution<int> distr_probV(0, probV.size() - 1);
+                    v = probV[distr_probV(generator)];
+                }
             }
             else {
                 std::uniform_int_distribution<int> distr_A(0, A.size() - 1);
-                u = A[distr_A(generator)];
+                u = A[distr_A(generator)];                    
                 std::uniform_int_distribution<int> distr_B(0, B.size() - 1);
                 v = B[distr_B(generator)];
             }
@@ -325,7 +479,6 @@ std::pair<std::unordered_set<int>, int> ts_0(Graph& g, std::unordered_set<int>& 
         else {
             ++tabuIters;
         }
-
     }
 
     return std::make_pair(bestS, iteration);
@@ -336,7 +489,7 @@ std::pair<std::unordered_set<int>, int> amts(Graph& g, int k, int L, int maxIter
     std::vector<int> frequencies(g.getNodeCount() + 1, 0);
 
     std::unordered_set<int> S{};
-    std::unordered_set<int> notInS = g.getNodeSet(); // postaraj se da je ovde kopiranje seta!
+    std::unordered_set<int> notInS = g.getNodeSet();
 
     constructInitialSolution(S, notInS, g, frequencies, k);
 
@@ -345,27 +498,27 @@ std::pair<std::unordered_set<int>, int> amts(Graph& g, int k, int L, int maxIter
     while(iters < maxIters) {
         auto [newS, passedIters] = ts_0(g, S, notInS, frequencies, k, L, iters, maxIters);
         iters = passedIters;
+
         if(isValid(f(g, newS), k)) {
             return std::make_pair(newS, iters);
         }
         else {
             // ako su sve frekvencije vece od k, niz treab da se resetuje
+            // osim na nultom mestu, tu uvek treba da bude 0
             bool shouldResetFrequencies = true;
-            for (int i = 0; i < g.getNodeCount() + 1; ++i) {
+            for (size_t i = 1; i < frequencies.size(); ++i) {
                 if(frequencies[i] < k) {
                     shouldResetFrequencies = false;
                     break;
                 }
             }
-            
+
             if(shouldResetFrequencies) {
-                for(auto& freq : frequencies) {
-                    freq = 0;
-                }
+                std::fill(std::begin(frequencies), std::end(frequencies), 0);
             }
 
             S = {};
-            notInS = g.getNodeSet(); // postaraj se da je ovde kopiranje seta!
+            notInS = g.getNodeSet(); 
             constructInitialSolution(S, notInS, g, frequencies, k);
         }
     }

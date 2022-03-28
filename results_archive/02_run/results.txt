@@ -1,0 +1,87 @@
+PASSED		54		FAILED/MIXED(*)	22
+-------------------------------------------------------------------------
+brock200-1	1.50s	
+				brock200-2	1.61s	  (*)nasao 11.2, treba 12
+brock200-3	1.52s
+				brock200-4	1.49s	  nasao 16, treba 17
+				brock400-1	36.93s	  nasao 25, treba 27
+				brock400-2	40.28s	  nasao 25.4, treba 29 (nalazio je klike 25 i 26)
+				brock400-3	35.14s	  nasao 25, treba 31
+brock400-4	113.85s
+				brock800-1	206.52s	  nasao 21, treba 23
+				brock800-2 	206.10s	  nasao 21, treba 24
+				brock800-3	255.63s	  nasao 21.8 , treba 25 (nalazio je klike 21 i 22)
+				brock800-4	192.39s	  nasao 21, treba 26
+C125-9		0.89s
+C250-9		2.39s
+C500-9		8.13s   (nasao 57 kao u radu, ali nije dokazano da je optimalna)
+				C1000.9		473.12s	  (*)nasao 67 i 68, u radu je 68, ali nije dokazano da je to optimalna
+C2000-5		1324.71s (nasao 16 kao u radu, ali nije dokazano da je optimalna)
+				C2000.9		1838.71s  nalazio 75, 76 i 77, u radu je 80, ali je i njima ovaj bio problematican
+				C4000.5		5639.22s  (*) nasao 17.2, u radu je 18 ali nije dokazano da je optimalna
+DSJC500-5	6.13s
+DSJC1000-5	25.66s
+keller4		1.11s
+keller5		202.23s (nasao 27 kao u radu, ali nije dokazano da je optimalna)
+				keller6		5243.37s  nasao 51.6, a treba 59 (nije dokazano da je 59 optimalno) (nalazio je 51 i 52)
+MANN-a9		0.46s
+				MANN-a27	6.56s	  nasao 125, treba 126
+	MANN-a45 NIJE TESTIRAN
+	MANN-a81 NIJE TESTIRAN
+hamming6-2	0.69s
+hamming6-4	0.42s
+hamming8-2	3.25s
+hamming8-4	2.36s
+hamming10-2 	44.60s
+hamming10-4	23.18s (nasao 40 kao u radu, ali nije dokazano da je optimalna) 
+gen200 p0.9-44	1.65s
+gen200 p0.9-55	1.70s
+gen400 p0.9-55	6.53s (nasao 55 kao u radu, ali nije dokazano da je optimalna)
+gen400 p0.9-65	5.14s (nasao 65 kao u radu, ali nije dokazano da je optimalna)
+gen400 p0.9-75	5.66s (nasao 75 kao u radu, ali nije dokazano da je optimalna)
+c-fat200-1	1.35s
+c-fat200-2	1.40s
+c-fat200-5	1.67s
+c-fat500-1	5.58s
+c-fat500-2	5.62s
+c-fat500-5	6.09s
+c-fat500-10	6.86s
+johnson8-2-4	0.26s
+johnson8-4-4	0.59s
+johnson16-2-4	0.94s
+johnson32-2-4	61.08s
+	p-hat300-1	NEMA DA SE SKINE NA ONOM SAJTU
+	p-hat300-2	NEMA DA SE SKINE NA ONOM SAJTU
+p-hat300-3	2.97s
+p-hat500-1	5.82s
+p-hat500-2	5.89s
+p-hat500-3	5.97s (nasao 50 kao u radu, ali nije dokazano da je optimalna)
+p-hat700-1	124.13s
+p-hat700-2	123.69s
+p-hat700-3	122.99s (nasao 62 kao u radu, ali nije dokazano da je optimalna)
+p-hat1000-1	265.56s (nasao 10 kao u radu, ali nije dokazano da je optimalna)
+p-hat1000-2	268.76s (nasao 46 kao u radu, ali nije dokazano da je optimalna)
+				p-hat-1000-3	256.01s   nasao 0, treba 68 (68 nije dokazano da je optimalna)
+p_hat1500-1	777.01s (nasao velicinu 12 4 puta i velicinu 11 jednom)
+p-hat1500-2	613.76s (nasao 65 kao u radu, ali nije dokazano da je optimalna)
+p-hat1500-3	635.21s (nasao 95 kao u radu, ali nije dokazano da je optimalna)
+				san200-0.7-1	6.11s	  nasao 26, treba 30
+san200-0.7-2	2.36s
+san200-0.9-1	5.07s
+san200-0.9-2	2.29s
+san200-0.9-3	1.78s	
+				san400-0.5-1	7.77s	nasao 9.4, treba 13   (nalazio je 9 i 10)
+				san400-0.7-1	6.53s	nasao 22.8, treba 40   (nalazio je 22, 23 i 25)
+				san400-0.7-2	9.89s	nasao 19.8, treba 30   (nalazio je 19, 20 i 22)
+				san400-0.7-3	6.45s	nasao 18.8, treba 22   (nalazio je 18 i 19)
+				san400-0.9-1	27.93s	nasao 84.2, treba 100   (nalazio je  80, 82, 85 i 87)
+				san1000		321.82s nasao 9.4, treba 15 (nalazio je 9 i 10)
+sanr200-0.7	1.49s
+sanr200-0.9	1.61s
+sanr400-0.5	4.40s
+sanr400-0.7	4.34s (nasao 21 kao u radu, ali nije dokazano da je optimalna)
+
+
+
+
+

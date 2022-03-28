@@ -17,9 +17,11 @@ int main() {
     std::filesystem::path dataPath("./data");
     for(const auto& dirEntry : std::filesystem::directory_iterator(dataPath)) {
         if(dirEntry.path().extension() == ".mtx") {
+            std::cout << "Loading graph " << dirEntry.path().stem() << " from file  ...... " << std::flush;
             Graph g(dirEntry.path());
             // std::cout << dirEntry.path() << std::endl;
             // std::cout << g << std::endl;
+            std::cout << "Done" << std::endl;
             
             std::vector<double> times{};
             std::vector<int> iterCounts{};
@@ -42,8 +44,8 @@ int main() {
                 std::cout << "--------------------------------------------------------------------------" << std::endl;
 
                 while(true) {
-                    std::cout << "Trying to find clique of size: " << currentCliqueSize << " ..... ";
-
+                    std::cout << "Trying to find clique of size: " << currentCliqueSize << " ..... " << std::flush;
+                    
                     auto [resultClique, passedIterations] = amts(g, currentCliqueSize, L, maxIters);
                     
                     totalIterations += passedIterations;
@@ -76,7 +78,7 @@ int main() {
             }
 
             std::cout << std::endl;
-            std::cout << "Exporting results......";
+            std::cout << "Exporting results  ......  " << std::flush;
 
             // export u fajl za plotter.py
             std::ofstream plotDataFile("plotData.txt", std::ofstream::out);
