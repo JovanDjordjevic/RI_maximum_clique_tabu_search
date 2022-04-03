@@ -1,0 +1,23 @@
+Jedini izmenjeni parametar je da je sad maxiters = 10 000 000
+Pusteno da radi na nekim grafovima za koje nisu uspesno nadjene klike sa default parametrima
+
+
+
+PASSED				MIXED(*)									FAILED					
+----------------------------------------------------------------------------------------------------------------
+brock200-2	154.17s
+brock200-4	196.44s
+														brock400-1	418.57ss	  nasao 25 i 26, treba 27
+brock400-2	492.55s	
+brock400-3	743.51s	  
+MANN-a27	591.99	 
+san200-0.7-1	177.44s
+				san400-0.5-1	682.22s	 (*)nasao 12.4, treba 13  (1x11, 1x12, 3x13)
+san400-0.7-1	1250.50s	
+				san400-0.7-2	1249.17s (*)nasao 28.8, treba 30 (1x25, 1x29, 3x30)
+				san400-0.7-3	606.89s	 (*)nasao 21.8, treba 22 (1x21, 4x22)
+
+
+
+
+

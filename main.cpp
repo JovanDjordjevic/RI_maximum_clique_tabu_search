@@ -5,13 +5,13 @@
 #include <filesystem>
 #include <tuple>
 #include <utility>
+#include <math.h>
 
 class Graph;
 std::pair<std::unordered_set<int>, int> amts(Graph&g, int k, int L, int maxIters);
 
 // NOTE: ovako kako je sad, procice kroz sve grafove u data folderu 
 // i probace samo jednom da nadje max clique za njih pocevsi od 3 pa dok ne fejluje
-// mozemo posle da probamo u npr 50 pokusaja posto je program brzi nego u pajtonu
 
 int main() {
     std::filesystem::path dataPath("./data");
@@ -29,7 +29,7 @@ int main() {
 
             // ponavljamo za jedan graf 5 puta
             for(int i = 1; i <= 5; ++i) {
-                int maxIters = 100000;                  // probati i sa nekim vecim parametrom potencijalno, ali to povlaci vece vreme
+                int maxIters = 100000;             // isprobano i 10000000
                 int L = g.getNodeCount();
 
                 auto start = std::chrono::high_resolution_clock::now();
