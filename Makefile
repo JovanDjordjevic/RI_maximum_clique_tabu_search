@@ -1,5 +1,5 @@
 CXX      = clang++ 
-#CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic		# za debug
+# CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic		# za debug
 CXXFLAGS = -std=c++17 -O3							# za testiranje
 TARGET   = main.out
 

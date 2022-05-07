@@ -22,11 +22,11 @@ class Graph {
         double calcDensity();
 
     private:
-        int nodeCount;   // da li treba long long mozda
-        int edgeCount;   //isto
-        std::vector<std::vector<int>> adjacencyMatrix; // mozda unsigned long ili slicno
-        std::unordered_set<int> nodeSet;    // isto
-        double density;     // isto da li trba veci tip
+        int nodeCount;
+        int edgeCount;
+        std::vector<std::vector<int>> adjacencyMatrix;
+        std::unordered_set<int> nodeSet;
+        double density;
 };
 
 #endif

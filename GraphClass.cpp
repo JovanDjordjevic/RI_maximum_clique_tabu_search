@@ -30,14 +30,10 @@ Graph::Graph(std::filesystem::path filePath) {
     this->nodeCount = numNodes;
     this->edgeCount = 0;
     this->adjacencyMatrix = std::vector<std::vector<int>>(this->nodeCount + 1, std::vector<int>(this->nodeCount + 1, 0));
-    // std::cout << this->adjacencyMatrix.size();
 
     for(int i = 1; i < this->nodeCount + 1; ++i) {
         this->nodeSet.emplace(i);
     }
-    // for(auto& val : this->nodeSet) {
-    //     std::cout << val << " ";
-    // }
 
     int node;
     int neighbor;

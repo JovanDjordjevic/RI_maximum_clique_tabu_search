@@ -1,10 +1,10 @@
-#include <bits/stdc++.h>
 #include "GraphClass.hpp"
+#include <chrono>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-using namespace std;
 
+using namespace std;
 
 const int MAX = 4000;
 
@@ -55,10 +55,24 @@ int maxCliquesBF(Graph g, int i, int l)
 }
 
 int main () {
+	std::filesystem::path dataPath("./data");
+    for(const auto& dirEntry : std::filesystem::directory_iterator(dataPath)) {
+        if(dirEntry.path().extension() == ".mtx") {
+            cout << "Loading graph " << dirEntry.path().stem() << " from file  ...... " << flush;
+            Graph g(dirEntry.path());
+            // std::cout << g << std::endl;
+            cout << "Done" << endl;
+			
+			auto start = std::chrono::high_resolution_clock::now();
 
-	std::filesystem::path dataPath("johnson16-2-4.mtx");
-	Graph g(dataPath);
-	cout << maxCliquesBF(g, 0, 1) << endl;
+			int maxCliqueSize = maxCliquesBF(g, 0, 1);
+			
+			auto end = std::chrono::high_resolution_clock::now();
+            chrono::duration<double> diff = end - start;
+
+			cout << "Found clique of size " << maxCliqueSize << " in " << diff.count() << " seconds" << endl << endl;
+		}
+	}
 
 	return 0;
 }

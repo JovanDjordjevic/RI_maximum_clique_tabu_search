@@ -10,16 +10,12 @@
 class Graph;
 std::pair<std::unordered_set<int>, int> amts(Graph&g, int k, int L, int maxIters);
 
-// NOTE: ovako kako je sad, procice kroz sve grafove u data folderu 
-// i probace samo jednom da nadje max clique za njih pocevsi od 3 pa dok ne fejluje
-
 int main() {
     std::filesystem::path dataPath("./data");
     for(const auto& dirEntry : std::filesystem::directory_iterator(dataPath)) {
         if(dirEntry.path().extension() == ".mtx") {
             std::cout << "Loading graph " << dirEntry.path().stem() << " from file  ...... " << std::flush;
             Graph g(dirEntry.path());
-            // std::cout << dirEntry.path() << std::endl;
             // std::cout << g << std::endl;
             std::cout << "Done" << std::endl;
             
@@ -29,7 +25,7 @@ int main() {
 
             // ponavljamo za jedan graf 5 puta
             for(int i = 1; i <= 5; ++i) {
-                int maxIters = 100000;             // isprobano i 10000000
+                int maxIters = 100'000;             // isprobano i 100'000'000
                 int L = g.getNodeCount();
 
                 auto start = std::chrono::high_resolution_clock::now();

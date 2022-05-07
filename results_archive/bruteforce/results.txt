@@ -1,0 +1,14 @@
+Bruteforce je pokrenut na 2 grafa (sa -O3 flagom pri kompilaciji):
+
+Izgleda da sto je veca klika koja se trazi to bruteforce traje duze
+
+johnson8-2-4	-> nasao kliku velicine 4 za 0.0080034 sekundi   (28 cvorova)	
+hamming-6-4	-> nasao kliku velicine 4 za 0.188635 sekundi	 (64 cvora)
+johnson8-4-4 	-> nasao kliku velicine 14 za 203.557 sekundi    (70 cvorova)
+MANN-a9		-> nasao kliku velicine 16 za 2103.68 sekundi  ~35min   (45 cvorova)
+
+C125-9		-> izvrsavao se duze od 9 sati pa je prekinut    (125 cvorova, treba da nadje kliku velicine 34)
+hamming-6-2	-> izvrsavao se duze od 9 sati pa je prekinut	 (64 cvora, treba da nadje kliku velicine 32)
+keller-4	-> izvrsavao se duze od 9 sati pa je prekinut	 (171 cvor, treba da nadje kliku velicine 11)
+
+
