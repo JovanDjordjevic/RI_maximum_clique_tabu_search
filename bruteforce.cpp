@@ -14,14 +14,14 @@ int d[MAX];
 
 int numOfIters = 0;
 
-// funckcija koja proverava da li je trenutni podskup klik velicine k
-bool is_clique(Graph g, int b)
+// funckcija koja proverava da li je trenutni podskup klik velicine cliqueSize
+bool is_clique(Graph g, int cliqueSize)
 {
     numOfIters++;
     std::vector<std::vector<int>> adjMatrix = g.getAdjacencyMatrix();
 
-	for (int i = 1; i < b; i++) {
-		for (int j = i + 1; j < b; j++)
+	for (int i = 1; i < cliqueSize; i++) {
+		for (int j = i + 1; j < cliqueSize; j++)
 
 			// ukoliko bilo koja grana nedostaje mozemo da vratmo false odmah
 			if (adjMatrix[store[i]][store[j]] == 0)
@@ -32,22 +32,21 @@ bool is_clique(Graph g, int b)
 	return true;
 }
 
-int maxCliquesBF(Graph g, int i, int l)
+int maxCliquesBF(Graph g, int startNode, int newSize)
 {
 	int maxClique = 0;
     int size = g.getNodeCount();
 
 	// proveravamo da li mozemo da dodamo bilo koji čvor tako da 
     // prosimo podskup i da on i dalje bude klik
-	for (int j = i + 1; j <= size; j++) {
+	// krecemo od cvora koji smo prosledili kao pocetni i proveramo sve dalje
+	for (int newNode = startNode + 1; newNode <= size; newNode++) {
 
-		store[l] = j;
+		store[newSize] = newNode;
 
-		// If the graph is not a clique of size k then
-		// it cannot be a clique by adding another edge
-		if (is_clique(g, l + 1)) {
-			maxClique = max(maxClique, l);
-			maxClique = max(maxClique, maxCliquesBF(g, j, l + 1));
+		if (is_clique(g, newSize)) {
+			maxClique = max(maxClique, newSize);
+			maxClique = max(maxClique, maxCliquesBF(g, newNode, newSize + 1));
 		}
 	}
 	
