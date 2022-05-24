@@ -1,4 +1,4 @@
-Bruteforce je pokrenut na 2 grafa (sa -O3 flagom pri kompilaciji):
+Bruteforce je pokrenut na 7 grafova (sa -O3 flagom pri kompilaciji):
 
 Izgleda da sto je veca klika koja se trazi to bruteforce traje duze
 
